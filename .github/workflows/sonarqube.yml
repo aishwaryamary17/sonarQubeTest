@@ -1,0 +1,35 @@
+name: SonarQube Scan
+
+on:
+  push:
+    branches:
+      - main # You can change this to the branch you want to scan
+
+jobs:
+  sonarqube:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install SonarQube Scanner
+        run: |
+          npm install -g sonarqube-scanner
+        env:
+          SONAR_USER_HOME: ./sonarqube
+
+      - name: SonarQube Scan
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=sonarqube-test-app \
+            -Dsonar.sources=src \
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_USER_HOME: ./sonarqube
