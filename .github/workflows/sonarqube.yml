@@ -24,12 +24,24 @@ jobs:
         env:
           SONAR_USER_HOME: ./sonarqube
 
+      - name: Start SonarQube Server
+      run: |
+        # Start your local SonarQube server
+        # Replace these commands with the actual commands to start SonarQube on localhost
+        # Example for Docker:
+        # docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
+        # Example for Docker Compose:
+        # docker-compose -f sonarqube-compose.yml up -d
+        # Wait for SonarQube to start (use sleep or a more robust method)
+        sleep 30
+      continue-on-error: true  # Continue even if SonarQube start fails
+
       - name: SonarQube Scan
         run: |
           sonar-scanner \
             -Dsonar.projectKey=sonarqube-test-app \
             -Dsonar.sources=src \
-            -Dsonar.host.url=http://localhost:9000/ \
+            -Dsonar.host.url=http://localhost:9000  # Use localhost
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
         env:
           SONAR_USER_HOME: ./sonarqube
