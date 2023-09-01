@@ -26,15 +26,9 @@ jobs:
 
       - name: Start SonarQube Server
         run: |
-          # Start your local SonarQube server
-          # Replace these commands with the actual commands to start SonarQube on localhost
-          # Example for Docker:
-          # docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
-          # Example for Docker Compose:
-          # docker-compose -f sonarqube-compose.yml up -d
-          # Wait for SonarQube to start (use sleep or a more robust method)
-          sleep 30
-        continue-on-error: true # Continue even if SonarQube start fails
+          docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
+          sleep 30  # Wait for 30 seconds to ensure SonarQube is ready
+        continue-on-error: true
 
       - name: SonarQube Scan
         run: |
