@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: 16 # Update this to Node.js 16
 
+      - name: Install dependencies
+        run: npm install
+
       - name: Install SonarQube Scanner
         run: |
           npm install -g sonarqube-scanner
@@ -26,9 +29,8 @@ jobs:
 
       - name: Start SonarQube Server
         run: |
-          docker run -d --name sonarqube -p 9000:9000 sonarqube:latest
-          sleep 30  # Wait for 30 seconds to ensure SonarQube is ready
-        continue-on-error: true
+          C:\Users\danto\SonarQube\sonarqube-9.9.1.69595\bin\windows-x86-64\StartSonar.bat
+        shell: cmd # Use the cmd shell for Windows
 
       - name: SonarQube Scan
         run: |
